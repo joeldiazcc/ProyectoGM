@@ -1,6 +1,10 @@
 # 📦 Gestión de Material
 
-Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 18.2.6.
+Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 18.2.6, utilizando Node.js y MySQL.
+
+## 🚀 Descripción del Proyecto
+
+El proyecto ha sido creado para gestionar el material de una empresa de manera dinámica y segura, trabajando sobre una base de datos MySQL.
 
 ## 🚀 Servidor de Desarrollo
 
@@ -55,7 +59,8 @@ gestion_material/
 │   └── styles.css
 ├── tests.spec.ts
 ├── tsconfig.app.json
-└── tsconfig.spec.json
+├── tsconfig.json
+├── tsconfig.spec.json
 gestion-material-backend/
 ├── auth.js
 ├── package.json
