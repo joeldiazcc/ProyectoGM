@@ -1,1 +1,111 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #E9EFF3; /* Alice blue */
+}
+
+.example-container {
+  height: 100%;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  min-width: 250px; 
+  max-width: 250px; 
+  background-color: #101054; /* Federal blue */
+  color: white;
+}
+
+mat-toolbar {
+  background-color: #101054; /* Federal blue */
+  color: white;
+}
+
+mat-nav-list a {
+  color: white;
+  text-decoration: none;
+}
+
+mat-nav-list a:hover {
+  background-color: #00B4D8; /* Pacific cyan */
+  color: white;
+}
+
+.content {
+  padding: 16px;
+  background-color: white;
+  margin: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  cursor: pointer;
+  background-color: #8ACEF1; /* Baby blue */
+}
+
+tr:hover {
+  background-color: #CAF0F8; /* Light cyan */
+}
+
+h2 {
+  background-color: #2E2D2D; /* Federal blue */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #1E41B0; /* Violet blue */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #00B4D8; /* Pacific cyan */
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 5px #00B4D8;
+}
+
+button.styled-button {
+  padding: 10px 20px;
+  background-color: #1E41B0; /* Violet blue */
+  color: white !important; /* Para que no se anteponga el estilo de los botones de materiales y empleados */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.styled-button:hover {
+  background-color: #00B4D8; /* Pacific cyan */
+}
+
+button.styled-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px #00B4D8;
+}

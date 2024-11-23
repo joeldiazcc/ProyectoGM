@@ -1,0 +1,15 @@
+<div class="register-container">
+  <h2>Registrar Usuario</h2>
+  <form (ngSubmit)="register()">
+    <div>
+      <label for="username">Usuario:</label>
+      <input type="text" id="username" [(ngModel)]="username" name="username" required>
+    </div>
+    <div>
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" [(ngModel)]="password" name="password" required>
+    </div>
+    <button type="submit">Registrar</button>
+  </form>
+  <div *ngIf="mensaje" class="alerta">{{ mensaje }}</div>
+</div>

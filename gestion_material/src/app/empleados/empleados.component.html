@@ -1,8 +1,119 @@
 <h2>Lista de Empleados</h2>
-<ul>
-    <li *ngFor="let empleado of empleados">
-        {{ empleado.nombre_empleado }} {{ empleado.apellido1_empleado }} - 
-    Estado: {{ empleado.estado }} 
-    </li>
-</ul>
-<p>empleados works!</p>
+<button mat-button class="styled-button" (click)="descargarTabla()">Descargar Tabla</button>
+<div *ngIf="error; else content">
+  <p>{{ error }}</p>
+</div>
+<ng-template #content>
+  <table mat-table [dataSource]="empleados" class="mat-elevation-z8">
+    <ng-container matColumnDef="id_empleado">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let empleado"> {{ empleado.id_empleado }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre_completo">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let empleado"> {{ getNombreCompleto(empleado) }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="correo">
+      <th mat-header-cell *matHeaderCellDef> Correo </th>
+      <td mat-cell *matCellDef="let empleado"> {{ empleado.correo }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let empleado"> {{ empleado.estado }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha_alta">
+      <th mat-header-cell *matHeaderCellDef> Fecha Alta </th>
+      <td mat-cell *matCellDef="let empleado"> {{ empleado.fecha_alta | date: 'yyyy-MM-dd' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha_baja">
+      <th mat-header-cell *matHeaderCellDef> Fecha Baja </th>
+      <td mat-cell *matCellDef="let empleado"> {{ empleado.fecha_baja | date: 'yyyy-MM-dd' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="material_asignado">
+      <th mat-header-cell *matHeaderCellDef> Material Asignado </th>
+      <td mat-cell *matCellDef="let empleado"> {{ getMaterialesAsignadosString(empleado.id_empleado) }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let empleado">
+        <button mat-button (click)="mostrarDetalles(empleado)">Detalles</button>
+        <button mat-button *ngIf="empleado.estado === 'Alta'" (click)="darBajaEmpleado(empleado.id_empleado)">Dar de baja</button>
+        <button mat-button (click)="modificarEmpleado(empleado)">Modificar</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'baja': row.estado === 'Baja'}"></tr>
+  </table>
+</ng-template>
+
+<div *ngIf="empleadoSeleccionado" class="detalles-container">
+  <h3>Detalles del Empleado</h3>
+  <p><strong>ID:</strong> {{ empleadoSeleccionado.id_empleado }}</p>
+  <p><strong>Nombre:</strong> {{ getNombreCompleto(empleadoSeleccionado) }}</p>
+  <p><strong>Estado:</strong> {{ empleadoSeleccionado.estado }}</p>
+  <p><strong>Fecha de Alta:</strong> {{ empleadoSeleccionado.fecha_alta | date: 'yyyy-MM-dd' }}</p>
+  <p><strong>Correo:</strong> {{ empleadoSeleccionado.correo }}</p>
+  <h4>Material Asignado</h4>
+  <div *ngFor="let material of getMaterialesAsignados(empleadoSeleccionado.id_empleado)">
+    <p><strong>ID Material:</strong> {{ material.id_material }}</p>
+    <p><strong>Tipo:</strong> {{ material.tipo }}</p>
+    <p><strong>Nombre:</strong> {{ material.nombre_material }}</p>
+    <p><strong>Características:</strong> {{ material.caracteristicas }}</p>
+    <p><strong>Fecha de Asignación:</strong> {{ material.fecha_asignacion | date: 'yyyy-MM-dd' }}</p>
+    <button mat-button (click)="quitarAsignacion(material.id_material, empleadoSeleccionado.id_empleado)">Quitar</button>
+  </div>
+  <button mat-button (click)="cerrarDetalles()">Cerrar</button>
+</div>
+
+<div *ngIf="empleadoModificando" class="detalles-container">
+  <h3>Modificar Empleado</h3>
+  <form (ngSubmit)="guardarModificaciones()">
+    <table>
+      <tr>
+        <td><label for="nombre">Nombre:</label></td>
+        <td><input id="nombre" [(ngModel)]="empleadoModificando.nombre_empleado" name="nombre_empleado" required></td>
+      </tr>
+      <tr>
+        <td><label for="apellido1">Primer Apellido:</label></td>
+        <td><input id="apellido1" [(ngModel)]="empleadoModificando.apellido1_empleado" name="apellido1_empleado" required></td>
+      </tr>
+      <tr>
+        <td><label for="apellido2">Segundo Apellido:</label></td>
+        <td><input id="apellido2" [(ngModel)]="empleadoModificando.apellido2_empleado" name="apellido2_empleado"></td>
+      </tr>
+      <tr>
+        <td><label for="estado">Estado:</label></td>
+        <td>
+          <select id="estado" [(ngModel)]="empleadoModificando.estado" name="estado" required>
+            <option value="Alta">Alta</option>
+            <option value="Baja">Baja</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="fecha_alta">Fecha de Alta:</label></td>
+        <td><input id="fecha_alta" type="date" [(ngModel)]="empleadoModificando.fecha_alta" name="fecha_alta" required></td>
+      </tr>
+      <tr>
+        <td><label for="fecha_baja">Fecha de Baja:</label></td>
+        <td><input id="fecha_baja" type="date" [(ngModel)]="empleadoModificando.fecha_baja" name="fecha_baja"></td>
+      </tr>
+      <tr>
+        <td><label for="correo">Correo:</label></td>
+        <td><input id="correo" type="email" [(ngModel)]="empleadoModificando.correo" name="correo" required></td>
+      </tr>
+      <tr>
+        <td colspan="2"><button type="submit">Guardar</button></td>
+      </tr>
+    </table>
+  </form>
+  <button mat-button (click)="cancelarModificacion()">Cancelar</button>
+</div>

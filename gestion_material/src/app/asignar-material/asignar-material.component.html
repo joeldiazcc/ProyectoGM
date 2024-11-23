@@ -1,0 +1,52 @@
+<h2>Asignar Material a Empleado</h2>
+<form (ngSubmit)="asignarMaterial()">
+  <table>
+    <tr>
+      <td><label for="empleado">Empleado:</label></td>
+      <td>
+        <select id="empleado" [(ngModel)]="asignacion.empleado_id" name="empleado_id" required>
+          <option *ngFor="let empleado of empleados" [value]="empleado.id_empleado">
+            {{ empleado.nombre_empleado }} {{ empleado.apellido1_empleado }} {{ empleado.apellido2_empleado }}
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="tipo_material">Tipo Material:</label></td>
+      <td>
+        <select id="tipo_material" [(ngModel)]="asignacion.tipo_material" name="tipo_material" (change)="filtrarMateriales()" required>
+          <option value="Ratón">Ratón</option>
+          <option value="Teclado">Teclado</option>
+          <option value="Auriculares">Auriculares</option>
+          <option value="Movil">Movil</option>
+          <option value="iPad">iPad</option>
+          <option value="Tablet">Tablet</option>
+          <option value="Portatil">Portatil</option>
+          <option value="Hub">Hub</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="material">Seleccionar Material:</label></td>
+      <td>
+        <select id="material" [(ngModel)]="asignacion.material_id" name="material_id" (change)="onMaterialChange()" required>
+          <option *ngFor="let material of materialesFiltrados" [value]="material.id_material">
+            {{ material.nombre_material }} - {{ material.caracteristicas }}
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr *ngIf="caracteristicas">
+      <td><label>Características:</label></td>
+      <td>{{ caracteristicas }}</td>
+    </tr>
+    <tr>
+      <td><label for="fecha_asignacion">Fecha de Asignación:</label></td>
+      <td><input type="date" id="fecha_asignacion" [(ngModel)]="asignacion.fecha_asignacion" name="fecha_asignacion" required></td>
+    </tr>
+    <tr>
+      <td colspan="2"><button type="submit">Asignar Material</button></td>
+    </tr>
+  </table>
+</form>
+<div *ngIf="mensaje" class="alerta">{{ mensaje }}</div>

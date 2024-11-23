@@ -1,0 +1,32 @@
+<h2>Agregar Nuevo Material</h2>
+<form (ngSubmit)="agregarMaterial()">
+  <table>
+    <tr>
+      <td><label for="nombre">Nombre:</label></td>
+      <td><input id="nombre" [(ngModel)]="nuevoMaterial.nombre_material" name="nombre_material" required></td>
+    </tr>
+    <tr>
+      <td><label for="tipo">Tipo:</label></td>
+      <td>
+        <select id="tipo" [(ngModel)]="nuevoMaterial.tipo" name="tipo" required>
+          <option value="Ratón">Ratón</option>
+          <option value="Teclado">Teclado</option>
+          <option value="Auriculares">Auriculares</option>
+          <option value="Movil">Movil</option>
+          <option value="iPad">iPad</option>
+          <option value="Tablet">Tablet</option>
+          <option value="Portatil">Portatil</option>
+          <option value="Hub">Hub</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="caracteristicas">Serial Number (S/N):</label></td>
+      <td><textarea id="caracteristicas" [(ngModel)]="nuevoMaterial.caracteristicas" name="caracteristicas"></textarea></td>
+    </tr>
+    <tr>
+      <td colspan="2"><button type="submit">Agregar Material</button></td>
+    </tr>
+  </table>
+</form>
+<div *ngIf="mensaje" class="alerta">{{ mensaje }}</div>

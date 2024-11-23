@@ -1,0 +1,74 @@
+mat-toolbar {
+  background-color: #1E41B0; /* Federal blue */
+  color: white;
+  display: flex;
+  align-items: center;
+  height: 60px; /* Ajusta la altura a 80px */
+}
+
+mat-toolbar .logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
+mat-sidenav {
+  background-color: #4d86b4; /* Federal blue */
+  color: white;
+}
+
+mat-nav-list a {
+  color: white; /* Color del texto */
+  text-decoration: none;
+  display: block;
+  padding: 10px 16px; /* Espaciado interno */
+  width: 100%; /* Asegura que el ancho sea constante */
+  box-sizing: border-box; /* Incluye el padding en el ancho total */
+}
+
+mat-nav-list a:hover {
+  background-color: #00B4D8; /* Pacific cyan */
+  color: white; /* Mantiene el color del texto */
+}
+
+.content {
+  padding: 16px;
+  background-color: #E9EFF3; /* Alice blue */
+  margin: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+mat-nav-list a[routerLink="/empleados"],
+mat-nav-list a[routerLink="/materiales"],
+mat-nav-list a[routerLink="/agregar-empleado"],
+mat-nav-list a[routerLink="/agregar-material"],
+mat-nav-list a[routerLink="/asignar-material"] {
+  color: white; /* Color del texto */
+  width: 100%; /* Asegura que el ancho sea constante */
+  box-sizing: border-box; /* Incluye el padding en el ancho total */
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+mat-nav-list a[routerLink="/empleados"]:hover,
+mat-nav-list a[routerLink="/materiales"]:hover,
+mat-nav-list a[routerLink="/agregar-empleado"]:hover,
+mat-nav-list a[routerLink="/agregar-material"]:hover,
+mat-nav-list a[routerLink="/asignar-material"]:hover {
+  background-color: #00B4D8; /* Pacific cyan */
+  color: #000000; /* Negro */
+}
+
+.logout-button-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  background-color: #4d86b4; /* Federal blue */
+}
+
+.logout-button-container button {
+  width: 100%;
+  color: white;
+}

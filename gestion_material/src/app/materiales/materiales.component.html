@@ -1,8 +1,48 @@
 <h2>Lista de Materiales</h2>
-<ul>
-    <li *ngFor="let material of materiales">
-        {{ material.nombre_material }} - Tipo: {{ material.tipo }} - 
-    Estado: {{ material.estado }} 
-    </li>
-</ul>
-<p>materials works!</p>
+<button mat-button class="styled-button" (click)="descargarTabla()">Descargar Tabla</button>
+<div *ngIf="error; else content">
+  <p>{{ error }}</p>
+</div>
+<ng-template #content>
+  <div *ngIf="materiales$ | async as materiales; else loading">
+    <table mat-table [dataSource]="materiales" class="mat-elevation-z8">
+      <ng-container matColumnDef="tipo">
+        <th mat-header-cell *matHeaderCellDef> Material </th>
+        <td mat-cell *matCellDef="let material"> {{ material.tipo }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre_material">
+        <th mat-header-cell *matHeaderCellDef> Modelo </th>
+        <td mat-cell *matCellDef="let material"> {{ material.nombre_material }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="caracteristicas">
+        <th mat-header-cell *matHeaderCellDef> Serial Number (S/N) </th>
+        <td mat-cell *matCellDef="let material"> {{ material.caracteristicas }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="stock">
+        <th mat-header-cell *matHeaderCellDef> Stock </th>
+        <td mat-cell *matCellDef="let material"> {{ material.stock }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let material"> {{ material.estado }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let material">
+          <button mat-button *ngIf="!(material.stock > 1 && material.estado === 'Asignado')" (click)="eliminarMaterial(material.id_material)">Eliminar</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <ng-template #loading>
+    <p>Loading...</p>
+  </ng-template>
+</ng-template>
